@@ -1,4 +1,3 @@
-from selenium.webdriver.common.by import By
 from pages.accountpage import AccountPage
 from pages.base_page import BasePage
 
