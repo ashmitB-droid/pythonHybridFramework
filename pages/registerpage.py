@@ -1,68 +1,57 @@
 from selenium.webdriver.common.by import By
 from pages.accountpage import AccountPage
+from pages.base_page import BasePage
 
 
-class RegisterPage:
+class RegisterPage(BasePage):
     def __init__(self, driver):
         self.driver = driver
 
-    firstname_field = "input-firstname"
-    lastname_field = "input-lastname"
-    email_field = "input-email"
-    telephone_field = "input-telephone"
-    password_field = "input-password"
-    confirm_password_field = "input-confirm"
-    agree_policy = "agree"
-    continue_button = "input[value='Continue']"
-    get_newsletter_radio = "//input[@name='newsletter'][@value='1']"
-    registration_warning_message = "//div[@id='account-register']/div[1]"
-    empty_first_name = "//input[@name='firstname']/following-sibling::div"
+    firstname_field_id = "input-firstname"
+    lastname_field_id = "input-lastname"
+    email_field_id = "input-email"
+    telephone_field_id = "input-telephone"
+    password_field_id = "input-password"
+    confirm_password_field_id = "input-confirm"
+    agree_policy_name = "agree"
+    continue_button_css = "input[value='Continue']"
+    get_newsletter_radio_xpath = "//input[@name='newsletter'][@value='1']"
+    registration_warning_message_xpath = "//div[@id='account-register']/div[1]"
+    empty_first_name_xpath = "//input[@name='firstname']/following-sibling::div"
 
     def enter_firstname(self, firstname_text):
-        self.driver.find_element(By.ID, self.firstname_field).click()
-        self.driver.find_element(By.ID, self.firstname_field).clear()
-        self.driver.find_element(By.ID, self.firstname_field).send_keys(firstname_text)
+        self.type_in_field("firstname_field_id", self.firstname_field_id, firstname_text)
 
     def enter_lastname(self, lastname_text):
-        self.driver.find_element(By.ID, self.lastname_field).click()
-        self.driver.find_element(By.ID, self.lastname_field).clear()
-        self.driver.find_element(By.ID, self.lastname_field).send_keys(lastname_text)
+        self.type_in_field("lastname_field_id", self.lastname_field_id, lastname_text)
 
     def enter_email(self, email_text):
-        self.driver.find_element(By.ID, self.email_field).click()
-        self.driver.find_element(By.ID, self.email_field).clear()
-        self.driver.find_element(By.ID, self.email_field).send_keys(email_text)
+        self.type_in_field("email_field_id", self.email_field_id, email_text)
 
     def enter_telephone(self, telephone_text):
-        self.driver.find_element(By.ID, self.telephone_field).click()
-        self.driver.find_element(By.ID, self.telephone_field).clear()
-        self.driver.find_element(By.ID, self.telephone_field).send_keys(telephone_text)
+        self.type_in_field("telephone_field_id", self.telephone_field_id, telephone_text)
 
     def enter_password(self, password_text):
-        self.driver.find_element(By.ID, self.password_field).click()
-        self.driver.find_element(By.ID, self.password_field).clear()
-        self.driver.find_element(By.ID, self.password_field).send_keys(password_text)
+        self.type_in_field("password_field_id", self.password_field_id, password_text)
 
     def confirm_password(self, confirm_password):
-        self.driver.find_element(By.ID, self.confirm_password_field).click()
-        self.driver.find_element(By.ID, self.confirm_password_field).clear()
-        self.driver.find_element(By.ID, self.confirm_password_field).send_keys(confirm_password)
+        self.type_in_field("confirm_password_field_id", self.confirm_password_field_id, confirm_password)
 
     def click_on_agree_policy_button(self):
-        self.driver.find_element(By.NAME, self.agree_policy).click()
+        self.click_on_button("agree_policy_name", self.agree_policy_name)
 
     def click_on_continue_button(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.continue_button).click()
+        self.click_on_button("continue_button_css", self.continue_button_css)
         return AccountPage(self.driver)
 
     def click_newsletter_radio_button(self):
-        self.driver.find_element(By.XPATH, self.get_newsletter_radio).click()
+        self.click_on_button("get_newsletter_radio_xpath", self.get_newsletter_radio_xpath)
 
     def get_registration_warning_message(self):
-        return self.driver.find_element(By.XPATH, self.registration_warning_message).text
+        return self.get_text_message("registration_warning_message_xpath", self.registration_warning_message_xpath)
 
     def get_empty_first_name_message(self):
-        return self.driver.find_element(By.XPATH, self.empty_first_name).text
+        return self.get_text_message("empty_first_name_xpath", self.empty_first_name_xpath)
 
     def register_with_fields(self, firstname_text, lastname_text, email_text, telephone_text, password_text,
                              confirm_password, agree_policy=True, news_letter=False):

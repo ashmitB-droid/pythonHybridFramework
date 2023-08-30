@@ -24,4 +24,5 @@ def setup_and_teardown(request):
     # this is what enable all classes to get driver to all classes
     request.cls.driver = driver
     yield
+    # time.sleep(100)
     driver.quit()
