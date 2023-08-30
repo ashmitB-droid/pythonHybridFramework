@@ -1,9 +1,8 @@
-import pytest
 from pages.homepage import HomePage
+from tests.base_test import BaseTest
 
 
-@pytest.mark.usefixtures("setup_and_teardown")
-class TestSearch:
+class TestSearch(BaseTest):
     def test_search_for_a_valid_product(self):
         home_page = HomePage(self.driver)
         search_page = home_page.search_for_product("HP")
@@ -18,5 +17,5 @@ class TestSearch:
     def test_search_without_any_product(self):
         home_page = HomePage(self.driver)
         search_page = home_page.search_for_product("")
-        expected_text = 'There is no product that matches the search criteria.'
+        expected_text = 'There is no product that matches the search criteria. Fail example'
         assert search_page.get_no_product_message().__eq__(expected_text)

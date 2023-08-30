@@ -1,13 +1,8 @@
-from datetime import datetime
-import pytest
 from pages.homepage import HomePage
+from tests.base_test import BaseTest
 
 
-@pytest.mark.usefixtures("setup_and_teardown")
-class TestRegister:
-    def generate_random_email_with_timestamp(self):
-        timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-        return "testing_"+timestamp+"@gmail.com"
+class TestRegister(BaseTest):
 
     def test_register_with_all_the_mandatory_fields(self):
         home_page = HomePage(self.driver)
