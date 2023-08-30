@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from pages.accountpage import AccountPage
 
 
 class LoginPage:
@@ -23,6 +24,12 @@ class LoginPage:
 
     def click_login_button(self):
         self.driver.find_element(By.CSS_SELECTOR, self.login_button).click()
+        return AccountPage(self.driver)
 
     def verify_login_warning_message(self):
         return self.driver.find_element(By.CSS_SELECTOR, self.login_warning_message).text
+
+    def login_with_credentials(self, email_text, password_text):
+        self.enter_email_in_input_field(email_text)
+        self.enter_password_in_input_field(password_text)
+        return self.click_login_button()

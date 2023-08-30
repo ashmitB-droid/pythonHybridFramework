@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from pages.accountpage import AccountPage
 
 
 class RegisterPage:
@@ -17,7 +18,7 @@ class RegisterPage:
     registration_warning_message = "//div[@id='account-register']/div[1]"
     empty_first_name = "//input[@name='firstname']/following-sibling::div"
 
-    def enter_firstname(self,firstname_text):
+    def enter_firstname(self, firstname_text):
         self.driver.find_element(By.ID, self.firstname_field).click()
         self.driver.find_element(By.ID, self.firstname_field).clear()
         self.driver.find_element(By.ID, self.firstname_field).send_keys(firstname_text)
@@ -52,6 +53,7 @@ class RegisterPage:
 
     def click_on_continue_button(self):
         self.driver.find_element(By.CSS_SELECTOR, self.continue_button).click()
+        return AccountPage(self.driver)
 
     def click_newsletter_radio_button(self):
         self.driver.find_element(By.XPATH, self.get_newsletter_radio).click()
@@ -61,3 +63,17 @@ class RegisterPage:
 
     def get_empty_first_name_message(self):
         return self.driver.find_element(By.XPATH, self.empty_first_name).text
+
+    def register_with_fields(self, firstname_text, lastname_text, email_text, telephone_text, password_text,
+                             confirm_password, agree_policy=True, news_letter=False):
+        self.enter_firstname(firstname_text)
+        self.enter_lastname(lastname_text)
+        self.enter_email(email_text)
+        self.enter_telephone(telephone_text)
+        self.enter_password(password_text)
+        self.confirm_password(confirm_password)
+        if news_letter:
+            self.click_newsletter_radio_button()
+        if agree_policy:
+            self.click_on_agree_policy_button()
+        return self.click_on_continue_button()
